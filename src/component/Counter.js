@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export const Counter = () => {
-  const [counter, setCounter] = useState(0);
+  // const [counter, setCounter] = useState(0);
   const [value, setValue] = useState(0);
+  const dispatch = useDispatch();
+  const counter = useSelector((state) => {
+    return state.counter;
+  });
 
   return (
     <div>
-      <h1>Counter : {counter}</h1>
-
       <input
         type="text"
         onChange={(e) => {
@@ -17,21 +19,25 @@ export const Counter = () => {
       />
       <button
         onClick={() => {
-          setCounter(counter + Number(value));
+          dispatch({ type: "INCREMENT_BY_VALUE", payload: Number(value) });
         }}
       >
         Increment By number
       </button>
       <button
         onClick={() => {
-          setCounter(counter + 1);
+          dispatch({
+            type: "INCREMENT",
+          });
         }}
       >
         Increment
       </button>
       <button
         onClick={() => {
-          setCounter(counter - 1);
+          dispatch({
+            type: "DECREMENT",
+          });
         }}
       >
         Decrement
